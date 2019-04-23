@@ -9,7 +9,8 @@ class BookRow extends Component{
             year: `${this.props.bookYear}`,
             rating: `${this.props.bookRating}`
         }
-        console.log('new favoriate book candidate ' + newFavoriateBook);
+        console.log('new favoriate book candidate ' + newFavoriateBook.title);
+        //const handleOnClick = this.props.handleOnClick
     
         return(
             <div> 
@@ -22,7 +23,7 @@ class BookRow extends Component{
                 </div>
 
                 <button 
-                    onClick={() => this.props.handleOnClick(this.newFavoriateBook)}
+                    onClick={ (e) => (this.props.handleOnClick(newFavoriateBook))}
                     >Add to my FavoriteList</button>
             </div>
         )

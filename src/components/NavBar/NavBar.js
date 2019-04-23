@@ -10,6 +10,8 @@ class NavBar extends Component{
             <div className = "navBar">
                 <BookResult 
                     books = {this.props.books}
+                    handleOnClick = {this.props.handleOnClick}
+
                 />
                 <FavoriateBooks 
                     // pass my favoriate book list

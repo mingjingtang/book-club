@@ -62,11 +62,15 @@ class App extends Component {
     })
   }
 
-  handleOnClick = (newBook) => {
+  handleOnClick = async(newBook) => {
     console.log('this component is clicked')
-    this.setState({
-      favoriateBooks: newBook
-    })
+    const {favoriteBooks} = this.state
+    let newList = favoriteBooks.filter(book => book.title !== newBook.title)
+    await this.setState(prevState => ({
+      favoriteBooks: [...newList,newBook], 
+    }))
+    console.log(this.state.favoriteBooks)
+
   }
 
 
@@ -87,7 +91,7 @@ class App extends Component {
                <NavBar 
                   books = {this.state.books}
                   favoriateBooks = {this.state.favoriteBooks}
-                  handleOnClick = {this.handleOnClick.bind(this)}
+                  handleOnClick = {this.handleOnClick}
               />
           </div>  
       </div>

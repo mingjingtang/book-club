@@ -9,6 +9,8 @@ class BookResult extends Component{
                 <h2>Book search result</h2>
                 <BookList 
                     books={this.props.books}
+                    handleOnClick = {this.props.handleOnClick}
+
                 />
             </div>
         )
