@@ -1,12 +1,17 @@
-import React from 'react'
+import React, { Component } from 'react';
 
 class SearchBar extends Component{
     render(){
+        console.log(this.props.book);
         return(
-            <div>
-                <input placeholder = "title of the book"/>
-                <button type = "submit">search</button>
-            </div>
+            <form onSubmit={this.props.fetchData}>
+                <input 
+                    placeholder = "title of the book" 
+                    value={this.props.inputValue}
+                    onChange={this.props.handleOnChange}
+                />
+                <button type="submit">search</button>
+            </form>
         )
     }
 }

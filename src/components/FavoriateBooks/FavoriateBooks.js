@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Component } from 'react';
 import BookList from '../BookList/BookList'
 
 class FavoriateBooks extends Component{
