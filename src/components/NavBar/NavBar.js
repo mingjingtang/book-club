@@ -1,14 +1,22 @@
 import React, { Component } from 'react';
-import RecentRelease from '../RecentRelease/RecentRelease'
+import BookResult from '../BookResult/BookResult'
 import FavoriateBooks from '../FavoriateBooks/FavoriateBooks'
 
 
 class NavBar extends Component{
     render(){
+        console.log(this.props.books)
         return(
             <div className = "navBar">
-                <RecentRelease/>
-                <FavoriateBooks/>
+                <BookResult 
+                    books = {this.props.books}
+                />
+                <FavoriateBooks 
+                    // pass my favoriate book list
+                    // books = {this.props.books}
+                    favoriateBooks = {this.props.favoriateBooks}
+                    handleOnClick = {this.props.handleOnClick}
+                />
             </div>
         )
     }

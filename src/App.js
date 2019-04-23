@@ -13,28 +13,10 @@ class App extends Component {
     super();
 
     this.state={
-      books: [
-        {
-          cover:'',
-          title: '',
-          author: '',
-          year: 0,
-          rating: 0,
-        },
-      ],
+      books: [],
+      favoriteBooks: [],
       inputValue: ''
-      // book:{
-      //     cover:'',
-      //     title: '',
-      //     author: '',
-      //     year: 0,
-      //     rating: 0,
-      // }
     }
-  }
-
-  componentDidMount(){
-      // this.fetchData();
   }
 
   fetchData = async (evt) => {
@@ -67,24 +49,12 @@ class App extends Component {
       this.setState(prevState => ({
           books: booksData
       }))
+
+      
     } catch (err) {
       console.log('error', err.message);
     }
   }
-
-  // handleOnChange = (e)=>{
-  //   let currentTitle = e.target.value
-    
-  //   this.setState(prevState => ({
-  //       books: [
-  //         {
-  //           title: currentTitle
-  //         }
-  //       ]
-  //     })
-  //   )
-  //   console.log('set', this.state.books.title)
-  // }
 
   handleOnChange = (evt) => {
     this.setState({
@@ -92,17 +62,34 @@ class App extends Component {
     })
   }
 
+  handleOnClick = (newBook) => {
+    console.log('this component is clicked')
+    this.setState({
+      favoriateBooks: newBook
+    })
+  }
+
+
   render() {
     return (
       <div className="App">
-        <h2>Book Club App</h2>
-        <SearchBar 
-          books = {this.state.books}
-          inputValue = {this.state.inputValue}
-          handleOnChange = {this.handleOnChange}
-          fetchData = {this.fetchData}
-        />
-        <NavBar/>
+          <div className = "search">
+              <h2>Book Club App</h2>
+              <SearchBar
+                  books = {this.state.books}
+                  inputValue = {this.state.inputValue}
+                  handleOnChange = {this.handleOnChange}
+                  fetchData = {this.fetchData}
+              />
+          </div>
+      
+          <div className = "seachResult">
+               <NavBar 
+                  books = {this.state.books}
+                  favoriateBooks = {this.state.favoriteBooks}
+                  handleOnClick = {this.handleOnClick.bind(this)}
+              />
+          </div>  
       </div>
     );
   }
