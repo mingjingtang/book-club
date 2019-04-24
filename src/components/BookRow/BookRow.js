@@ -7,25 +7,9 @@ class BookRow extends Component{
             title: `${this.props.bookTitle}`,
             author:`${this.props.bookAuthor}`,
             year: `${this.props.bookYear}`,
-            rating: `${this.props.bookRating}`
+            rating: `${this.props.bookRating}`,
+            isFavoriateBook: true
         }
-        console.log('new favoriate book candidate ' + newFavoriateBook.title);
-
-        console.log(this.props.isFavoriteBooks)
-        
-        const buttonSwitch = () => {
-            if(this.props.isFavoriteBooks === true){
-                return(
-                        "delete"
-                )
-            }
-            else{
-                return(
-                        "Add to my list"
-                )
-            }
-        }
-        
 
         return(
             <div> 
@@ -40,7 +24,7 @@ class BookRow extends Component{
                 
                 <button 
                         onClick={ (e) => (this.props.handleOnClick(newFavoriateBook))}>
-                        {buttonSwitch()}
+                        Add to my favoriate list
                 </button>
             </div>
         )

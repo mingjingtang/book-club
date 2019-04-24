@@ -1,22 +1,20 @@
 import React, { Component } from 'react';
 import BookResult from '../BookResult/BookResult'
-import FavoriateBooks from '../FavoriateBooks/FavoriateBooks'
+import FavoriteBooks from '../FavoriteBooks/FavoriteBooks'
 
 
 class NavBar extends Component{
     render(){
-        console.log(this.props.books)
+        console.log(this.props.favoriteBooks)
         return(
             <div className = "navBar">
                 <BookResult 
                     books = {this.props.books}
                     handleOnClick = {this.props.handleOnClick}
-                    isFavoriteBooks = {this.props.isFavoriteBooks}
                 />
-                <FavoriateBooks 
-                    favoriateBooks = {this.props.favoriateBooks}
-                    handleOnClick = {this.props.handleOnClick}
-                    isFavoriteBooks = {this.props.isFavoriteBooks}
+                <FavoriteBooks 
+                    favoriteBooks = {this.props.favoriteBooks}
+                    favoriteBook = {this.props.favoriteBook}
                 />
             </div>
         )

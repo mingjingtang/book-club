@@ -10,7 +10,6 @@ class BookResult extends Component{
                 <BookList 
                     books={this.props.books}
                     handleOnClick = {this.props.handleOnClick}
-                    isFavoriteBooks = {this.props.isFavoriteBooks}
                 />
             </div>
         )
