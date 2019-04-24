@@ -18,6 +18,8 @@ class BookList extends Component{
     render(){
         // console.log('books', this.props.books)
         // const checkRender = this.props.books ? this.renderBooks() : <h1>Render my favorite books</h1>
+        let isFavoriateBook = false;
+        // const checkRender = this.props.favoriateBooks ? isFavoriateBook === true : isFavoriateBook === false;
         return(
             <div className = "bookList">
                 {/* {checkRender} */}

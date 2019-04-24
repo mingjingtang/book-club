@@ -3,13 +3,14 @@ import React, { Component } from 'react';
 class BookRow extends Component{
     render(){
         const newFavoriateBook = {
-            img: `${this.props.bookCover}`,
+            cover: `${this.props.bookCover}`,
             title: `${this.props.bookTitle}`,
             author:`${this.props.bookAuthor}`,
             year: `${this.props.bookYear}`,
             rating: `${this.props.bookRating}`
         }
         console.log('new favoriate book candidate ' + newFavoriateBook.title);
+        console.log('new favoriate book cover ' + newFavoriateBook.cover)
         //const handleOnClick = this.props.handleOnClick
     
         return(

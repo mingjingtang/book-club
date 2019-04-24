@@ -15,7 +15,8 @@ class App extends Component {
     this.state={
       books: [],
       favoriteBooks: [],
-      inputValue: ''
+      inputValue: '',
+      // isFavoriteBooks: false
     }
   }
 
@@ -92,6 +93,7 @@ class App extends Component {
                   books = {this.state.books}
                   favoriateBooks = {this.state.favoriteBooks}
                   handleOnClick = {this.handleOnClick}
+                  // isFavoriteBooks = {this.state.isFavoriteBooks}
               />
           </div>  
       </div>
