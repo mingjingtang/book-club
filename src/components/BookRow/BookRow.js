@@ -10,9 +10,23 @@ class BookRow extends Component{
             rating: `${this.props.bookRating}`
         }
         console.log('new favoriate book candidate ' + newFavoriateBook.title);
-        console.log('new favoriate book cover ' + newFavoriateBook.cover)
-        //const handleOnClick = this.props.handleOnClick
-    
+
+        console.log(this.props.isFavoriteBooks)
+        
+        const buttonSwitch = () => {
+            if(this.props.isFavoriteBooks === true){
+                return(
+                        "delete"
+                )
+            }
+            else{
+                return(
+                        "Add to my list"
+                )
+            }
+        }
+        
+
         return(
             <div> 
                 <div>
@@ -23,9 +37,11 @@ class BookRow extends Component{
                     <p>Rating: {this.props.bookRating}</p>
                 </div>
 
+                
                 <button 
-                    onClick={ (e) => (this.props.handleOnClick(newFavoriateBook))}
-                    >Add to my FavoriteList</button>
+                        onClick={ (e) => (this.props.handleOnClick(newFavoriateBook))}>
+                        {buttonSwitch()}
+                </button>
             </div>
         )
     }

@@ -11,15 +11,12 @@ class NavBar extends Component{
                 <BookResult 
                     books = {this.props.books}
                     handleOnClick = {this.props.handleOnClick}
-                    // isFavoriteBooks = {this.props.isFavoriteBooks}
-
+                    isFavoriteBooks = {this.props.isFavoriteBooks}
                 />
                 <FavoriateBooks 
-                    // pass my favoriate book list
-                    // books = {this.props.books}
                     favoriateBooks = {this.props.favoriateBooks}
                     handleOnClick = {this.props.handleOnClick}
-                    // isFavoriteBooks = {this.props.isFavoriteBooks}
+                    isFavoriteBooks = {this.props.isFavoriteBooks}
                 />
             </div>
         )
