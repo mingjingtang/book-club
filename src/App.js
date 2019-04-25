@@ -7,16 +7,22 @@ let convert = require('xml-to-json-promise');
 let parseString = require('xml2js').parseString;
 
 
-
 class App extends Component {
   constructor(){
     super();
 
     this.state={
+      inputValue: '',
       books: [],
       favoriteBooks: [],
-      inputValue: '',
-      // isFavoriteBooks: false
+      // favoriteBook:{
+      //   cover: '',
+      //   title: '',
+      //   author:'',
+      //   year:'',
+      //   rating:'',
+      //   isFavoriateBook: false
+      // }
     }
   }
 
@@ -50,13 +56,11 @@ class App extends Component {
       this.setState(prevState => ({
           books: booksData
       }))
-
-      
     } catch (err) {
       console.log('error', err.message);
     }
   }
-
+ 
   handleOnChange = (evt) => {
     this.setState({
       inputValue: evt.target.value
@@ -66,16 +70,43 @@ class App extends Component {
   handleOnClick = async(newBook) => {
     console.log('this component is clicked')
     const {favoriteBooks} = this.state
-    let newList = favoriteBooks.filter(book => book.title !== newBook.title)
-    await this.setState(prevState => ({
-      favoriteBooks: [...newList,newBook], 
-    }))
-    console.log(this.state.favoriteBooks)
 
+    console.log(favoriteBooks)
+    // let newList = favoriteBooks.filter(book => book.title !== newBook.title)
+    // await this.setState(prevState => ({
+    //   favoriteBooks: [...newList,newBook], 
+    // }))
+    
+    await this.setState(prevState => ({
+      favoriteBooks: [...prevState.favoriteBooks,newBook],
+    }))
+    // this.state.favoriteBooks.push(this.state.favoriteBook)
+    
+    console.log(this.state.favoriteBooks)
   }
 
 
-  render() {
+  handleOnClick2 = async () => {
+    //  console.log('the book to be delete ' + deleteBook.title)
+    console.log('this component is going to be deleted')
+
+    console.log(this.state.favoriteBooks)
+
+    await this.setState(prevState => ({
+        favoriteBooks: this.state.favoriteBooks.filter(b=>{
+            return b.isFavoriateBook === false
+        })
+    }))
+    
+    console.log('my favoriate book list now is ' + this.state.favoriteBooks)
+  }
+
+
+  render = () => {
+    console.log('my favoriteBooks in render'+ this.state.favoriteBooks)
+    // console.log('my favoriteBook in render' + this.state.favoriteBook)
+  
+
     return (
       <div className="App">
           <div className = "search">
@@ -91,9 +122,10 @@ class App extends Component {
           <div className = "seachResult">
                <NavBar 
                   books = {this.state.books}
-                  favoriateBooks = {this.state.favoriteBooks}
+                  favoriteBooks = {this.state.favoriteBooks}
+                  // favoriteBook = {this.state.favoriteBook}
                   handleOnClick = {this.handleOnClick}
-                  // isFavoriteBooks = {this.state.isFavoriteBooks}
+                  handleOnClick2 = {this.handleOnClick2}
               />
           </div>  
       </div>

@@ -14,7 +14,8 @@ class NavBar extends Component{
                 />
                 <FavoriteBooks 
                     favoriteBooks = {this.props.favoriteBooks}
-                    favoriteBook = {this.props.favoriteBook}
+                    // favoriteBook = {this.props.favoriteBook}
+                    handleOnClick2 = {this.props.handleOnClick2}
                 />
             </div>
         )
