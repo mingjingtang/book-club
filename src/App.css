@@ -1,7 +1,12 @@
+@import url(https://fonts.googleapis.com/css?family=Fira+Sans);
+
 .App {
   /* text-align: center; */
-  text-align: left;
-  margin: 0 60px;
+  /* text-align: left; */
+  padding: 0 60px;
+  font-family: 'Fira Sans', sans-serif;
+  /* background-color:#e6c29e; */
+  /* color: #adadad */
 }
 
 .App-logo {
@@ -32,4 +37,21 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+h1{
+  font-size: 40px;
+}
+
+li{
+  list-style: none;
+}
+
+ul{
+  /* display: flex; */
+  text-decoration: none;
+}
+
+nav{
+  text-decoration: none;
 }

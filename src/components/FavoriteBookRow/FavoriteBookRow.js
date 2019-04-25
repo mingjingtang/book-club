@@ -20,7 +20,6 @@ class FavoriteBookRow extends Component{
                     <p>Author: {this.props.bookAuthor}</p>
                     <p>Year: {this.props.bookYear}</p>
                     <p>Rating: {this.props.bookRating}</p>
-                    <p>{this.props.id}</p>
                 </div>
 
                 
