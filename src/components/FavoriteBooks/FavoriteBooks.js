@@ -9,7 +9,8 @@ class FavoriteBooks extends Component{
                 <h2>Favorite Books</h2>
                 <FavoriteBookList 
                     favoriteBooks = {this.props.favoriteBooks}
-                    favoriteBook = {this.props.favoriteBook}
+                    // favoriteBook = {this.props.favoriteBook}
+                    handleOnClick2 = {this.props.handleOnClick2}
                 />
             </div>
         )

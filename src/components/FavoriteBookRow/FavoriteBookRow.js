@@ -2,6 +2,14 @@ import React, { Component } from 'react';
 
 class FavoriteBookRow extends Component{
     render(){
+        // const deleteBook = {
+        //     cover: `${this.props.bookCover}`,
+        //     title: `${this.props.bookTitle}`,
+        //     author:`${this.props.bookAuthor}`,
+        //     year: `${this.props.bookYear}`,
+        //     rating: `${this.props.bookRating}`,
+        //     isFavoriateBook: false
+        // }
         return(
             <div> 
                 <div>
@@ -13,8 +21,9 @@ class FavoriteBookRow extends Component{
                 </div>
 
                 
-                <button>
-                        {/* onClick={ (e) => (this.props.handleOnClick(newFavoriateBook))}> */}
+                <button
+                        // onClick={(e) => {this.props.handleOnClick2(deleteBook)}}>
+                        onClick = {this.props.handleOnClick2}>
                         Delete
                 </button>
             </div>
