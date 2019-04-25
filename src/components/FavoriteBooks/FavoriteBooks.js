@@ -5,7 +5,7 @@ class FavoriteBooks extends Component{
     render(){
         console.log(this.props.favoriteBooks)
         return(
-            <div className = "myFavoriteBooks">
+            <div className = "myFavoriteBooks" style={{alignSelf: 'flex-end'}}>
                 <h2>Favorite Books</h2>
                 <FavoriteBookList 
                     favoriteBooks = {this.props.favoriteBooks}

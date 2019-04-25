@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
+import {Route, Link} from 'react-router-dom'
 import './App.css';
 import SearchBar from './components/SearchBar/SearchBar'
 import NavBar from './components/NavBar/NavBar'
 import axios from 'axios'
 let convert = require('xml-to-json-promise');
 let parseString = require('xml2js').parseString;
+
+
 
 
 class App extends Component {
@@ -118,25 +121,50 @@ class App extends Component {
 
     return (
       <div className="App">
-          <div className = "search">
-              <h2>Book Club App</h2>
-              <SearchBar
+          <nav>
+              <h1>Book Club App</h1>
+              <ul>
+                <li><Link to="/SearchBar">SearchBar</Link></li>
+                <li><Link to="/NavBar">NavBar</Link></li>
+              </ul>
+          </nav>
+      
+          <main>
+              <Route 
+                  exact path="/SearchBar" 
+                  render={()=><SearchBar
+                      books = {this.state.books}
+                      inputValue = {this.state.inputValue}
+                      handleOnChange = {this.handleOnChange}
+                      fetchData = {this.fetchData}/>}
+              />
+
+              <Route 
+                  exact path="/NavBar" 
+                  render={()=><NavBar 
+                      books = {this.state.books}
+                      favoriteBooks = {this.state.favoriteBooks}
+                      // favoriteBook = {this.state.favoriteBook}
+                      handleOnClick = {this.handleOnClick}
+                      handleOnClick2 = {this.handleOnClick2}/>}
+              />
+
+               {/* <SearchBar
                   books = {this.state.books}
                   inputValue = {this.state.inputValue}
                   handleOnChange = {this.handleOnChange}
                   fetchData = {this.fetchData}
-              />
-          </div>
-      
-          <div className = "seachResult">
-               <NavBar 
+              /> */}
+
+
+               {/* <NavBar 
                   books = {this.state.books}
                   favoriteBooks = {this.state.favoriteBooks}
                   // favoriteBook = {this.state.favoriteBook}
                   handleOnClick = {this.handleOnClick}
                   handleOnClick2 = {this.handleOnClick2}
-              />
-          </div>  
+              /> */}
+          </main>  
       </div>
     );
   }

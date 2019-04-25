@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import {Route, Link} from 'react-router-dom'
 
 class SearchBar extends Component{
     render(){
@@ -11,6 +12,7 @@ class SearchBar extends Component{
                 />
                 <button type="submit">search</button>
             </form>
+                
         )
     }
 }
