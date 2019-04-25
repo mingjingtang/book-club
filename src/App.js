@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import {Route, Link} from 'react-router-dom'
+import BookResult from './components/BookResult/BookResult'
+import FavoriteBooks from './components/FavoriteBooks/FavoriteBooks'
+import BookList from './components/BookList/BookList'
 import './App.css';
 import SearchBar from './components/SearchBar/SearchBar'
 import NavBar from './components/NavBar/NavBar'
@@ -60,6 +63,18 @@ class App extends Component {
       this.setState(prevState => ({
           books: booksData
       }))
+
+      // if(booksData!==null){
+      //   this.setState(prevState => ({
+      //     books:booksData
+      // })) 
+      // }
+      
+      // booksData?this.setState(prevState => ({
+      //     books:booksData
+      // })) : this.state.books
+
+
     } catch (err) {
       console.log('error', err.message);
     }
@@ -97,8 +112,6 @@ class App extends Component {
     //  console.log('the book to be delete ' + deleteBook.title)
     console.log('this is the id i am going to delete ' + id)
 
-    // console.log('this component is going to be deleted')
-
     console.log(this.state.favoriteBooks)
 
     const {favoriteBooks} = this.state
@@ -122,53 +135,73 @@ class App extends Component {
     return (
       <div className="App">
           <nav>
-              <h1>Book Club App</h1>
+              <h1>Book Club</h1>
+
+              <form onSubmit={this.fetchData}>
+                  <input 
+                    placeholder = "title of the book" 
+                    value={this.state.inputValue}
+                    onChange={this.handleOnChange}
+                  />
+                  <button type="submit">search</button>
+              </form>
+
               <ul>
-                <li><Link to="/SearchBar">SearchBar</Link></li>
-                <li><Link to="/NavBar">NavBar</Link></li>
+                {/* <li><Link to="/SearchBar">SearchBar</Link></li> */}
+                {/* <li><Link to="/NavBar">NavBar</Link></li> */}
+                <li><Link to="/BookResult">Book search result</Link></li>
+                {/* <BookList 
+                    books={this.state.books}
+                    handleOnClick = {this.handleOnClick}
+                /> */}
+                <li><Link to="FavoriteBooks">My favorite books</Link></li>
               </ul>
+
+              {/* <p>{this.state.books}</p> */}
           </nav>
       
           <main>
-              <Route 
-                  exact path="/SearchBar" 
+              {/* <Route 
+                  path="/SearchBar" 
                   render={()=><SearchBar
                       books = {this.state.books}
                       inputValue = {this.state.inputValue}
                       handleOnChange = {this.handleOnChange}
                       fetchData = {this.fetchData}/>}
-              />
+              /> */}
 
-              <Route 
-                  exact path="/NavBar" 
+              {/* <Route 
+                  path="/NavBar" 
                   render={()=><NavBar 
                       books = {this.state.books}
                       favoriteBooks = {this.state.favoriteBooks}
                       // favoriteBook = {this.state.favoriteBook}
                       handleOnClick = {this.handleOnClick}
                       handleOnClick2 = {this.handleOnClick2}/>}
+              /> */}
+
+              <Route
+                exact path = "/BookResult"
+                render={()=><BookResult
+                    books = {this.state.books}
+                    handleOnClick = {this.handleOnClick}
+                    favoriteBooks = {this.state.favoriteBooks}
+                        // favoriteBook = {this.props.favoriteBook}
+                    handleOnClick2 = {this.handleOnClick2}
+                />}
               />
 
-               {/* <SearchBar
-                  books = {this.state.books}
-                  inputValue = {this.state.inputValue}
-                  handleOnChange = {this.handleOnChange}
-                  fetchData = {this.fetchData}
-              /> */}
-
-
-               {/* <NavBar 
-                  books = {this.state.books}
+              <Route
+                path = "/FavoriteBooks"
+                render={()=><FavoriteBooks
                   favoriteBooks = {this.state.favoriteBooks}
-                  // favoriteBook = {this.state.favoriteBook}
-                  handleOnClick = {this.handleOnClick}
                   handleOnClick2 = {this.handleOnClick2}
-              /> */}
+                />}
+              />
           </main>  
       </div>
     );
   }
-  
 }
 
 export default App;
