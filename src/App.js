@@ -15,6 +15,7 @@ class App extends Component {
       inputValue: '',
       books: [],
       favoriteBooks: [],
+      target: null
       // favoriteBook:{
       //   cover: '',
       //   title: '',
@@ -81,24 +82,32 @@ class App extends Component {
       favoriteBooks: [...prevState.favoriteBooks,newBook],
     }))
     // this.state.favoriteBooks.push(this.state.favoriteBook)
-    
+
     console.log(this.state.favoriteBooks)
   }
 
 
-  handleOnClick2 = async () => {
+  handleOnClick2 = async (id) => {
+    // const { name, value } = evt;
+    // console.log('clicked', evt.target.value)
+    // this.setState({[name]: value})
     //  console.log('the book to be delete ' + deleteBook.title)
-    console.log('this component is going to be deleted')
+    console.log('this is the id i am going to delete ' + id)
+
+    // console.log('this component is going to be deleted')
 
     console.log(this.state.favoriteBooks)
 
+    const {favoriteBooks} = this.state
+    console.log('favoriate book before splice' + this.state.favoriteBooks)
+    favoriteBooks.splice(id, 1);
+    console.log('favoriate book after splice ' + this.state.favoriteBooks)
+    
     await this.setState(prevState => ({
         favoriteBooks: this.state.favoriteBooks.filter(b=>{
-            return b.isFavoriateBook === false
+            return b.isFavoriateBook === true
         })
     }))
-    
-    console.log('my favoriate book list now is ' + this.state.favoriteBooks)
   }
 
 

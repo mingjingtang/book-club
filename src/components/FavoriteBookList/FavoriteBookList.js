@@ -8,6 +8,7 @@ class FavoriteBookList extends Component{
                 handleOnClick2 = {this.props.handleOnClick2}
                 // favoriteBook = {this.props.favoriteBook}
                 key = {index}
+                id = {index}
                 bookCover = {book.cover}
                 bookTitle = {book.title}
                 bookAuthor = {book.author}
