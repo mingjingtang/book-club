@@ -9,16 +9,20 @@ class BookResult extends Component{
         return(
             <div className = "bookResult" style={{display: 'flex'}}>
                 <h2>Book search result</h2>
+                <div>
                 <BookList 
                     books={this.props.books}
                     handleOnClick = {this.props.handleOnClick}
                 />
-                {/* <p>my favoriate book</p> */}
+                </div>
+                
+                <div className = "favoriteBooks">
                 <FavoriteBooks
                     favoriteBooks = {this.props.favoriteBooks}
                         // favoriteBook = {this.props.favoriteBook}
                     handleOnClick2 = {this.props.handleOnClick2}
                 />
+                </div> 
             </div>
         )
     }

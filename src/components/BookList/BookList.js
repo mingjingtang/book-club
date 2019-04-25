@@ -3,7 +3,7 @@ import BookRow from '../BookRow/BookRow'
 
 class BookList extends Component{
     render(){
-        console.log(this.props.books)
+        // console.log(this.props.books)
         let renderBooks = this.props.books ? this.props.books.map((book, index) => {
             return <BookRow 
                 handleOnClick = {this.props.handleOnClick} 

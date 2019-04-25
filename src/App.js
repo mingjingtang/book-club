@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import {Route, Link} from 'react-router-dom'
+import {Route, Link, Redirect} from 'react-router-dom'
 import BookResult from './components/BookResult/BookResult'
 import FavoriteBooks from './components/FavoriteBooks/FavoriteBooks'
+import BookRow from './components/BookRow/BookRow'
 import BookList from './components/BookList/BookList'
 import './App.css';
 import SearchBar from './components/SearchBar/SearchBar'
@@ -21,7 +22,7 @@ class App extends Component {
       inputValue: '',
       books: [],
       favoriteBooks: [],
-      target: null
+      target: null,
       // favoriteBook:{
       //   cover: '',
       //   title: '',
@@ -61,7 +62,7 @@ class App extends Component {
       parseString(xml, (err,result) => console.log(JSON.stringify(result)))
 
       this.setState(prevState => ({
-          books: booksData
+          books: booksData,
       }))
 
       // if(booksData!==null){
@@ -130,7 +131,30 @@ class App extends Component {
   render = () => {
     console.log('my favoriteBooks in render'+ this.state.favoriteBooks)
     // console.log('my favoriteBook in render' + this.state.favoriteBook)
-  
+    const isBookHere = (this.state.books.length>0)?
+    // <p>{this.state.books}</p>
+    // this.state.books.map((book,index)=>(
+    //   <BookRow 
+    //             handleOnClick = {this.handleOnClick} 
+    //             key = {index}
+    //             bookCover = {book.cover}
+    //             bookTitle = {book.title}
+    //             bookAuthor = {book.author}
+    //             bookYear = {book.year}
+    //             bookRating = {book.rating}
+    //   />
+    // ))
+    
+
+    <Route 
+      exact path="/"
+      render={()=> 
+        <Redirect
+          to={{
+          pathname: "./BookResult",
+        }}/> }
+    />
+    :null
 
     return (
       <div className="App">
@@ -157,6 +181,7 @@ class App extends Component {
                 <li><Link to="FavoriteBooks">My favorite books</Link></li>
               </ul>
 
+              {/* {isBookHere} */}
               {/* <p>{this.state.books}</p> */}
           </nav>
       
@@ -180,6 +205,17 @@ class App extends Component {
                       handleOnClick2 = {this.handleOnClick2}/>}
               /> */}
 
+              {/* <Route
+                exact path = "/"
+                render={()=><BookResult
+                    books = {this.state.books}
+                    handleOnClick = {this.handleOnClick}
+                    favoriteBooks = {this.state.favoriteBooks}
+                        // favoriteBook = {this.props.favoriteBook}
+                    handleOnClick2 = {this.handleOnClick2}
+                />}
+              /> */}
+              {isBookHere}
               <Route
                 exact path = "/BookResult"
                 render={()=><BookResult
