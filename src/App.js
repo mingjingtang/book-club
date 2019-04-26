@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
-import {Route, Link, Redirect} from 'react-router-dom'
+import {Route, Link, Redirect} from 'react-router-dom';
 import BookResult from './components/BookResult/BookResult'
 import FavoriteBooks from './components/FavoriteBooks/FavoriteBooks'
 import './App.css';
 import axios from 'axios'
 let convert = require('xml-to-json-promise');
 let parseString = require('xml2js').parseString;
-
 
 class App extends Component {
   constructor(){
@@ -102,23 +101,27 @@ class App extends Component {
 
     return (
       <div className="App">
-          <nav>
-              <h1>Book Club</h1>
+          <div>
+              <h1 className='title is-1 is-spaced'>Book Club</h1>
 
-              <form onSubmit={this.fetchData}>
-                  <input 
-                    placeholder = "title of the book" 
-                    value={this.state.inputValue}
-                    onChange={this.handleOnChange}
-                  />
-                  <button type="submit">search</button>
+              <form className="field is-grouped" onSubmit={this.fetchData}>
+                  <p className="control is-expanded">
+                      <input className="input" type="text" placeholder="title of the book" value={this.state.inputValue}
+                      onChange={this.handleOnChange}/>
+                  </p>
+                  <p className="control">
+                      <a class="button is-primary">
+                          Search
+                      </a>
+                  </p>
               </form>
 
-              <div className = "list">
-                <p className = "bookResult"><Link to="/BookResult"  style={{fontSize:'30px', color:'gray' }}>Book search result</Link></p>
-                <button className = "myFavorite"><Link to="FavoriteBooks"  style={{ textDecoration: 'none' ,fontSize:'20px', color:'gray'}}>My favorite books</Link></button>
+
+              <div className = "columns">
+                <p className = "column"><Link to="/BookResult"  style={{fontSize:'30px', color:'gray' }}>Book search result</Link></p>
+                <p className = "column"><Link to="FavoriteBooks"  style={{ fontSize:'30px', color:'gray'}}>My favorite books</Link></p>
               </div>
-          </nav>
+          </div>
       
           <main>
               {isBookHere}

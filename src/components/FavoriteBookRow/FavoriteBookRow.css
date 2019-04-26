@@ -1,0 +1,6 @@
+@import url(../../../node_modules/bulma/css/bulma.css);
+
+.favoriteBookRow{
+    margin-top: 2em;
+    margin-bottom: 2em
+}

@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
+import '../FavoriteBookRow/FavoriteBookRow.css'
 
 class FavoriteBookRow extends Component{
     render(){
         console.log(this.props.id)
         return(
-            <div>
+            <div className = "favoriteBookRow">
                 <div>
                     <img src = {this.props.bookCover} alt=""/>
                     <p>Title: {this.props.bookTitle}</p>
@@ -14,7 +15,7 @@ class FavoriteBookRow extends Component{
                 </div>
 
                 
-                <button
+                <button className="button is-rounded"
                         onClick = {(e) => this.props.handleOnClick2(this.props.id)}>
                         Delete
                 </button>

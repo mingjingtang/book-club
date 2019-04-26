@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import FavoriteBookRow from '../FavoriteBookRow/FavoriteBookRow'
+import '../FavoriteBookList/FavoriteBookList.css'
 
 class FavoriteBookList extends Component{
     render(){

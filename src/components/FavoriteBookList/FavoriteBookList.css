@@ -1,0 +1,5 @@
+@import url(../../../node_modules/bulma/css/bulma.css);
+
+.favoriteBookList{
+    align-self: flex-end
+}

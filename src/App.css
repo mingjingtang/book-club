@@ -1,8 +1,9 @@
 @import url(https://fonts.googleapis.com/css?family=Fira+Sans);
+@import url(../node_modules/bulma/css/bulma.css);
 
 .App {
   width: 1000px;
-  margin: 0 60px;
+  margin: 40px 60px;
   font-family: 'Fira Sans', sans-serif;
   display: inline-block;
   align-content: center
@@ -38,21 +39,7 @@
   }
 }
 
-h1{
-  font-size: 40px;
-}
 
-.list{
-  list-style: none;
-  display: flex;
-}
 
-.myFavorite{
-  align-content: flex-end;
-}
 
-.button{
-  line-height:20px;
-  display: table-cell;
-  vertical-align: middle;
-}
+
