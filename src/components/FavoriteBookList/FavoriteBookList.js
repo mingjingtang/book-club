@@ -6,7 +6,6 @@ class FavoriteBookList extends Component{
         let renderFavoriteBooks = this.props.favoriteBooks? this.props.favoriteBooks.map((book, index) => {
             return <FavoriteBookRow  
                 handleOnClick2 = {this.props.handleOnClick2}
-                // favoriteBook = {this.props.favoriteBook}
                 key = {index}
                 id = {index}
                 bookCover = {book.cover}

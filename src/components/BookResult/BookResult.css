@@ -1,7 +1,12 @@
-.bookResult{
-    display:flex;
-    width: 1000px;
+.result{
+    display:flex
 }
+
+
+.bookResult{
+    margin-right: 10em 
+}
+
 
 .favoriteBooks{
     float: right

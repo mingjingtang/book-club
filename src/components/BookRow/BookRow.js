@@ -14,7 +14,7 @@ class BookRow extends Component{
         return(
             <div> 
                 <div>
-                    <img src = {this.props.bookCover} alt="new image"/>
+                    <img src = {this.props.bookCover} alt=""/>
                     <p>Title: {this.props.bookTitle}</p>
                     <p>Author: {this.props.bookAuthor}</p>
                     <p>Year: {this.props.bookYear}</p>
