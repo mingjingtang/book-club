@@ -1,7 +1,13 @@
-.bookResult{
-    margin-right: 40px;
+.result{
+    display:flex
 }
 
-h2{
-    margin-right: 60px;
+
+.bookResult{
+    margin-right: 10em 
+}
+
+
+.favoriteBooks{
+    float: right
 }

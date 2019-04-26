@@ -1,12 +1,11 @@
 @import url(https://fonts.googleapis.com/css?family=Fira+Sans);
 
 .App {
-  /* text-align: center; */
-  /* text-align: left; */
-  padding: 0 60px;
+  width: 1000px;
+  margin: 0 60px;
   font-family: 'Fira Sans', sans-serif;
-  /* background-color:#e6c29e; */
-  /* color: #adadad */
+  display: inline-block;
+  align-content: center
 }
 
 .App-logo {
@@ -43,15 +42,17 @@ h1{
   font-size: 40px;
 }
 
-li{
+.list{
   list-style: none;
+  display: flex;
 }
 
-ul{
-  /* display: flex; */
-  text-decoration: none;
+.myFavorite{
+  align-content: flex-end;
 }
 
-nav{
-  text-decoration: none;
+.button{
+  line-height:20px;
+  display: table-cell;
+  vertical-align: middle;
 }
