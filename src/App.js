@@ -110,7 +110,7 @@ class App extends Component {
                       onChange={this.handleOnChange}/>
                   </p>
                   
-                  <input class="button is-primary" type="submit" value="Search"></input>
+                  <input className="button is-primary" type="submit" value="Search"></input>
               </form>
 
 
