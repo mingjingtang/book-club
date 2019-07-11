@@ -109,11 +109,8 @@ class App extends Component {
                       <input className="input" type="text" placeholder="title of the book" value={this.state.inputValue}
                       onChange={this.handleOnChange}/>
                   </p>
-                  <p className="control">
-                      <a class="button is-primary">
-                          Search
-                      </a>
-                  </p>
+                  
+                  <input class="button is-primary" type="submit" value="Search"></input>
               </form>
 
 
