@@ -23,7 +23,7 @@ class App extends Component {
     try {
       evt.preventDefault();
       const fetchCall =  await axios({
-        url:`https://www.goodreads.com/search/index.xml?key=${process.env.REACT_APP_BOOK_KEY}&q=${this.state.inputValue}`,
+        url:`https://cors-anywhere.herokuapp.com/https://www.goodreads.com/search/index.xml?key=${process.env.REACT_APP_BOOK_KEY}&q=${this.state.inputValue}`,
         method: 'get'
       })
       
