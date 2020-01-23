@@ -22,11 +22,6 @@ class App extends Component {
 
   fetchData = async evt => {
     try {
-      // evt.preventDefault();
-      // const fetchCall = await axios({
-      //   url: `https://cors-anywhere.herokuapp.com/https://www.goodreads.com/search/index.xml?key=${process.env.REACT_APP_BOOK_KEY}&q=${this.state.inputValue}`,
-      //   method: "get"
-
       evt.preventDefault();
       const fetchCall = await goodReads.get("/search/index.xml", {
         params: {
