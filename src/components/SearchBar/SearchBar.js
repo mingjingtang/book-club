@@ -3,19 +3,19 @@ import React from "react";
 class SearchBar extends React.Component {
   state = { term: "" };
 
-  onFormSubmit = event => {
-    event.preventDefault();
-    this.props.onFormSubmit(this.props.term);
-  };
-
   onInputChange = event => {
     this.setState({ term: event.target.value });
+  };
+
+  onFormSubmit = event => {
+    event.preventDefault();
+    this.props.onFormSubmit(this.state.term);
   };
 
   render() {
     return (
       <div>
-        <form onFormSubmit={this.props.onFormSubmit}>
+        <form onSubmit={this.onFormSubmit}>
           <div className="field is-grouped">
             <input
               className="input"
@@ -24,9 +24,7 @@ class SearchBar extends React.Component {
               value={this.state.term}
               onChange={this.onInputChange}
             />
-            <button className="button is-primary" type="submit">
-              Submit
-            </button>
+            <button className="button is-primary">Submit</button>
           </div>
         </form>
       </div>

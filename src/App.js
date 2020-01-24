@@ -10,34 +10,30 @@ let parseString = require("xml2js").parseString;
 
 class App extends React.Component {
   state = {
-    inputValue: "",
     books: [],
     favoriteBooks: [],
     target: null
   };
 
   onTermSubmit = async term => {
-    try {
-      const fetchCall = await goodReads.get("/search/index.xml", {
-        params: {
-          q: this.state.inputValue
-        }
-      });
+    const fetchCall = await goodReads.get("/search/index.xml", {
+      params: {
+        q: term
+      }
+    });
+    console.log("this is in the app", fetchCall.data);
 
-      let xml = this.onTermSubmit.data;
-      let jsonData = [];
-      await convert.xmlDataToJSON(fetchCall.data).then(json => {
-        jsonData = json.GoodreadsResponse.search[0].results[0].work;
-      });
+    // let xml = this.onTermSubmit.data;
+    // let jsonData = [];
+    // await convert.xmlDataToJSON(fetchCall.data).then(json => {
+    //   jsonData = json.GoodreadsResponse.search[0].results[0].work;
+    // });
 
-      parseString(xml, (err, result) => console.log(JSON.stringify(result)));
+    // parseString(xml, (err, result) => console.log(JSON.stringify(result)));
 
-      this.setState(prevState => ({
-        books: booksData
-      }));
-    } catch (err) {
-      console.log("error", err.message);
-    }
+    // this.setState(prevState => ({
+    //   books: booksData
+    // }));
   };
 
   handleOnClick = async newBook => {
