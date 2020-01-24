@@ -1,28 +1,24 @@
-import React, { Component } from "react";
-import { Route, Link, Redirect } from "react-router-dom";
+import React from "react";
+import goodReads from "./apis/goodReads";
+import "./App.css";
+import SearchBar from "./components/SearchBar/SearchBar";
 import BookResult from "./components/BookResult/BookResult";
 import FavoriteBooks from "./components/FavoriteBooks/FavoriteBooks";
-import "./App.css";
-import goodReads from "./apis/goodReads";
 
 let convert = require("xml-to-json-promise");
 let parseString = require("xml2js").parseString;
 
-class App extends Component {
-  constructor() {
-    super();
+class App extends React.Component {
+  state = {
+    inputValue: "",
+    books: [],
+    favoriteBooks: [],
+    target: null
+  };
 
-    this.state = {
-      inputValue: "",
-      books: [],
-      favoriteBooks: [],
-      target: null
-    };
-  }
-
-  fetchData = async evt => {
+  onTermSubmit = async term => {
     try {
-      evt.preventDefault();
+      term.preventDefault();
       const fetchCall = await goodReads.get("/search/index.xml", {
         params: {
           q: this.state.inputValue
@@ -83,95 +79,18 @@ class App extends Component {
     }));
   };
 
-  render = () => {
-    console.log("my favoriteBooks in render" + this.state.favoriteBooks);
-
-    const isBookHere =
-      this.state.books.length > 0 ? (
-        <Route
-          exact
-          path="/"
-          render={() => (
-            <Redirect
-              to={{
-                pathname: "./BookResult"
-              }}
-            />
-          )}
-        />
-      ) : null;
-
+  render() {
     return (
       <div className="App">
         <div>
           <h1 className="title is-1 is-spaced">Book Club</h1>
-
-          <form className="field is-grouped" onSubmit={this.fetchData}>
-            <p className="control is-expanded">
-              <input
-                className="input"
-                type="text"
-                placeholder="title of the book"
-                value={this.state.inputValue}
-                onChange={this.handleOnChange}
-              />
-            </p>
-
-            <input
-              className="button is-primary"
-              type="submit"
-              value="Search"
-            ></input>
-          </form>
-
-          <div className="columns">
-            <p className="column">
-              <Link
-                to="/BookResult"
-                style={{ fontSize: "30px", color: "gray" }}
-              >
-                Book search result
-              </Link>
-            </p>
-            <p className="column">
-              <Link
-                to="FavoriteBooks"
-                style={{ fontSize: "30px", color: "gray" }}
-              >
-                My favorite books
-              </Link>
-            </p>
+          <div className="ui container">
+            <SearchBar onSubmit={this.onTermSubmit} />
           </div>
         </div>
-
-        <main>
-          {isBookHere}
-          <Route
-            exact
-            path="/BookResult"
-            render={() => (
-              <BookResult
-                books={this.state.books}
-                handleOnClick={this.handleOnClick}
-                favoriteBooks={this.state.favoriteBooks}
-                handleOnClick2={this.handleOnClick2}
-              />
-            )}
-          />
-
-          <Route
-            path="/FavoriteBooks"
-            render={() => (
-              <FavoriteBooks
-                favoriteBooks={this.state.favoriteBooks}
-                handleOnClick2={this.handleOnClick2}
-              />
-            )}
-          />
-        </main>
       </div>
     );
-  };
+  }
 }
 
 export default App;
