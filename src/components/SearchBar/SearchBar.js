@@ -1,25 +1,37 @@
 import React from "react";
 
-const SearchBar = props => {
-  return (
-    <div>
-      <form className="field is-grouped" onSubmit={props.onSubmit}>
-        <p className="control is-expanded">
-          <input
-            className="input"
-            type="text"
-            placeholder="title of the book"
-          />
-        </p>
+class SearchBar extends React.Component {
+  state = { term: "" };
 
-        <input
-          className="button is-primary"
-          type="submit"
-          value="Search"
-        ></input>
-      </form>
-    </div>
-  );
-};
+  onFormSubmit = event => {
+    event.preventDefault();
+    this.props.onFormSubmit(this.props.term);
+  };
+
+  onInputChange = event => {
+    this.setState({ term: event.target.value });
+  };
+
+  render() {
+    return (
+      <div>
+        <form onFormSubmit={this.props.onFormSubmit}>
+          <div className="field is-grouped">
+            <input
+              className="input"
+              type="text"
+              placeholder="title of the book"
+              value={this.state.term}
+              onChange={this.onInputChange}
+            />
+            <button className="button is-primary" type="submit">
+              Submit
+            </button>
+          </div>
+        </form>
+      </div>
+    );
+  }
+}
 
 export default SearchBar;

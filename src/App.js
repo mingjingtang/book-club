@@ -18,27 +18,18 @@ class App extends React.Component {
 
   onTermSubmit = async term => {
     try {
-      term.preventDefault();
       const fetchCall = await goodReads.get("/search/index.xml", {
         params: {
           q: this.state.inputValue
         }
       });
 
-      let xml = fetchCall.data;
+      let xml = this.onTermSubmit.data;
       let jsonData = [];
       await convert.xmlDataToJSON(fetchCall.data).then(json => {
         jsonData = json.GoodreadsResponse.search[0].results[0].work;
       });
 
-      let booksData = jsonData.map((book, index) => ({
-        cover: book.best_book[0].image_url[0],
-        title: book.best_book[0].title[0],
-        author: book.best_book[0].author[0].name[0],
-        year: book.original_publication_year[0]._,
-        rating: book.average_rating[0]
-      }));
-      console.log("booksData info:", booksData);
       parseString(xml, (err, result) => console.log(JSON.stringify(result)));
 
       this.setState(prevState => ({
@@ -47,12 +38,6 @@ class App extends React.Component {
     } catch (err) {
       console.log("error", err.message);
     }
-  };
-
-  handleOnChange = evt => {
-    this.setState({
-      inputValue: evt.target.value
-    });
   };
 
   handleOnClick = async newBook => {
@@ -85,7 +70,7 @@ class App extends React.Component {
         <div>
           <h1 className="title is-1 is-spaced">Book Club</h1>
           <div className="ui container">
-            <SearchBar onSubmit={this.onTermSubmit} />
+            <SearchBar onFormSubmit={this.onTermSubmit} />
           </div>
         </div>
       </div>
