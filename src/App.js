@@ -3,6 +3,7 @@ import { Route, Redirect } from "react-router-dom";
 import FavoriteBooks from "./components/FavoriteBooks/FavoriteBooks";
 import MenuNav from "./components/MenuNav/MenuNav";
 import Home from "./components/Home/Home";
+import Login from "./components/Login/Login";
 import { bookGetter } from "./services/api";
 import "./App.css";
 let convert = require("xml-to-json-promise");
@@ -13,6 +14,7 @@ class App extends Component {
     favoriteBooks: [],
     inputValue: "",
     dataPresent: null,
+    loggedIn: true,
   };
 
   handleOnChange = (evt) => {
@@ -74,53 +76,39 @@ class App extends Component {
   };
 
   render() {
-    const { books, inputValue } = this.state;
+    const { books, inputValue, loggedIn } = this.state;
 
     return (
       <main>
-        <MenuNav />
-        <Redirect to="/Home" />
-        <Route
-          path="/Home"
-          render={() => (
-            <Home
-              books={books}
-              inputValue={inputValue}
-              fetchData={this.fetchData}
-              handleOnClick={this.handleOnClick}
-              handleOnChange={this.handleOnChange}
+        {!loggedIn ? (
+          <Route exact path="/" render={() => <Login />} />
+        ) : (
+          <>
+            <MenuNav />
+            <Redirect to="/Home" />
+            <Route
+              path="/Home"
+              render={() => (
+                <Home
+                  books={books}
+                  inputValue={inputValue}
+                  fetchData={this.fetchData}
+                  handleOnClick={this.handleOnClick}
+                  handleOnChange={this.handleOnChange}
+                />
+              )}
             />
-          )}
-        />
-        <Route
-          path="/myFavorite"
-          render={() => (
-            <FavoriteBooks
-              favoriteBooks={this.state.favoriteBooks}
-              handleOnClick2={this.handleOnClick2}
+            <Route
+              path="/myFavorite"
+              render={() => (
+                <FavoriteBooks
+                  favoriteBooks={this.state.favoriteBooks}
+                  handleOnClick2={this.handleOnClick2}
+                />
+              )}
             />
-          )}
-        />
-        {/* 
-          <div className="columns">
-            <p className="column">
-              <Link
-                to="/BookResult"
-                style={{ fontSize: "30px", color: "gray" }}
-              >
-                Book search result
-              </Link>
-            </p>
-            <p className="column">
-              <Link
-                to="FavoriteBooks"
-                style={{ fontSize: "30px", color: "gray" }}
-              >
-                My favorite books
-              </Link>
-            </p>
-          </div>
-        </div> */}
+          </>
+        )}
       </main>
     );
   }
