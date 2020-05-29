@@ -1,13 +1,56 @@
 import React, { Component } from "react";
-import { Route, Link, Redirect } from "react-router-dom";
+import { Route, Redirect } from "react-router-dom";
 import FavoriteBooks from "./components/FavoriteBooks/FavoriteBooks";
+import MenuNav from "./components/MenuNav/MenuNav";
 import Home from "./components/Home/Home";
+import { bookGetter } from "./services/api";
 import "./App.css";
+let convert = require("xml-to-json-promise");
 
 class App extends Component {
   state = {
+    books: [],
     favoriteBooks: [],
-    // target: null,
+    inputValue: "",
+    dataPresent: null,
+  };
+
+  handleOnChange = (evt) => {
+    this.setState({
+      inputValue: evt.target.value,
+    });
+  };
+
+  fetchData = async (event) => {
+    event.preventDefault();
+
+    const data = await bookGetter(this.state.inputValue);
+
+    if (data.data !== "FAILED") {
+      //convert data to json.
+      let jsonData = [];
+      await convert.xmlDataToJSON(data.data).then((json) => {
+        jsonData = json.GoodreadsResponse.search[0].results[0].work;
+      });
+
+      let booksData = jsonData.map((book, index) => ({
+        cover: book.best_book[0].image_url[0],
+        title: book.best_book[0].title[0],
+        author: book.best_book[0].author[0].name[0],
+        year: book.original_publication_year[0]._,
+        rating: book.average_rating[0],
+      }));
+      console.log("booksData info:", booksData);
+
+      this.setState((prevState) => ({
+        books: booksData,
+        dataPresent: true,
+      }));
+    } else {
+      this.setState({
+        dataPresent: false,
+      });
+    }
   };
 
   handleOnClick = async (newBook) => {
@@ -31,49 +74,24 @@ class App extends Component {
   };
 
   render() {
+    const { books, inputValue } = this.state;
+
     return (
       <main>
-        <nav
-          className="navbar is-primary"
-          role="navigation"
-          aria-label="main navigation"
-        >
-          <div className="navbar-start">
-            <p
-              className="title is-2"
-              style={{
-                textAlign: "center",
-                marginTop: "1vh",
-                marginRight: "2vh",
-                marginBottom: "1vh",
-                marginLeft: "2vh",
-              }}
-            >
-              Book Club
-            </p>
-
-            <Link to="/Home">Home</Link>
-            <Link exact to="/myFavorite">
-              My favoriate
-            </Link>
-          </div>
-
-          <div className="navbar-end">
-            <div className="navbar-item">
-              <div className="buttons">
-                <a className="button is-primary">
-                  <strong>Sign up</strong>
-                </a>
-                <a className="button is-light">Log in</a>
-              </div>
-            </div>
-          </div>
-        </nav>
-
+        <MenuNav />
         <Redirect to="/Home" />
-        <Route exact path="/Home">
-          <Home />
-        </Route>
+        <Route
+          path="/Home"
+          render={() => (
+            <Home
+              books={books}
+              inputValue={inputValue}
+              fetchData={this.fetchData}
+              handleOnClick={this.handleOnClick}
+              handleOnChange={this.handleOnChange}
+            />
+          )}
+        />
         <Route
           path="/myFavorite"
           render={() => (
@@ -83,7 +101,6 @@ class App extends Component {
             />
           )}
         />
-
         {/* 
           <div className="columns">
             <p className="column">
