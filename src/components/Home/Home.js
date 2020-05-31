@@ -1,5 +1,6 @@
 import React from "react";
 import BookList from "../BookList/BookList";
+import { Form, Button, Container, Input } from "semantic-ui-react";
 
 export default class MenuNav extends React.Component {
   render() {
@@ -7,37 +8,41 @@ export default class MenuNav extends React.Component {
       books,
       handleOnClick,
       fetchData,
-      inputValue,
+      bookInfo,
       handleOnChange,
+      dataPresent,
+      wrongSubmit,
     } = this.props;
 
     const bookData =
-      books.length !== 0 ? (
+      dataPresent !== false ? (
         <BookList books={books} handleOnClick={handleOnClick} />
-      ) : null;
+      ) : (
+        <div className="ui error message">
+          <div className="content">
+            <div className="header">Sorry, couldn't find "{wrongSubmit}"!</div>
+            <p>Please try to find other books or authors.</p>
+          </div>
+        </div>
+      );
 
     return (
-      <>
-        <form className="field is-grouped" onSubmit={fetchData}>
-          <p className="control is-expanded">
-            <input
-              className="input"
-              type="text"
-              placeholder="title or author of the book"
-              value={inputValue}
+      <Container>
+        <Form onSubmit={fetchData}>
+          <Form.Field inline>
+            <Input
+              style={{ width: "80%" }}
+              placeholder="enter title or author of the book that you are interesting"
+              name="bookInfo"
+              value={bookInfo || ""}
               onChange={handleOnChange}
             />
-          </p>
-
-          <input
-            className="button is-info"
-            type="submit"
-            value="Search"
-          ></input>
-        </form>
+            <Button primary>Search</Button>
+          </Form.Field>
+        </Form>
 
         {bookData}
-      </>
+      </Container>
     );
   }
 }

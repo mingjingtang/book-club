@@ -1,6 +1,4 @@
-@import url(../../../node_modules/bulma/css/bulma.css);
-
-.bookRow{
-    margin-top: 2em;
-    margin-bottom: 2em
+.bookRow {
+  margin-top: 2em;
+  margin-bottom: 2em;
 }

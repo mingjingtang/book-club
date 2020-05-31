@@ -12,29 +12,30 @@ class App extends Component {
   state = {
     books: [],
     favoriteBooks: [],
-    inputValue: "",
     dataPresent: null,
     loggedIn: true,
+    wrongSubmit: "",
   };
 
-  handleOnChange = (evt) => {
+  handleOnChange = (event) => {
+    const { name, value } = event.target;
     this.setState({
-      inputValue: evt.target.value,
+      [name]: value,
     });
   };
 
   fetchData = async (event) => {
     event.preventDefault();
 
-    const data = await bookGetter(this.state.inputValue);
+    const data = await bookGetter(this.state.bookInfo);
 
-    if (data.data !== "FAILED") {
-      //convert data to json.
-      let jsonData = [];
-      await convert.xmlDataToJSON(data.data).then((json) => {
-        jsonData = json.GoodreadsResponse.search[0].results[0].work;
-      });
+    //convert data to json.
+    let jsonData = [];
+    await convert.xmlDataToJSON(data.data).then((json) => {
+      jsonData = json.GoodreadsResponse.search[0].results[0].work;
+    });
 
+    if (jsonData !== undefined) {
       let booksData = jsonData.map((book, index) => ({
         cover: book.best_book[0].image_url[0],
         title: book.best_book[0].title[0],
@@ -42,15 +43,17 @@ class App extends Component {
         year: book.original_publication_year[0]._,
         rating: book.average_rating[0],
       }));
-      console.log("booksData info:", booksData);
 
-      this.setState((prevState) => ({
+      this.setState({
         books: booksData,
         dataPresent: true,
-      }));
+        bookInfo: "",
+      });
     } else {
       this.setState({
         dataPresent: false,
+        wrongSubmit: this.state.bookInfo,
+        bookInfo: "",
       });
     }
   };
@@ -76,7 +79,14 @@ class App extends Component {
   };
 
   render() {
-    const { books, inputValue, loggedIn } = this.state;
+    const {
+      books,
+      inputValue,
+      loggedIn,
+      dataPresent,
+      wrongSubmit,
+      bookInfo,
+    } = this.state;
 
     return (
       <main>
@@ -90,9 +100,12 @@ class App extends Component {
               path="/Home"
               render={() => (
                 <Home
+                  bookInfo={bookInfo}
+                  dataPresent={dataPresent}
                   books={books}
                   inputValue={inputValue}
                   fetchData={this.fetchData}
+                  wrongSubmit={wrongSubmit}
                   handleOnClick={this.handleOnClick}
                   handleOnChange={this.handleOnChange}
                 />

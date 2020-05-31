@@ -1,6 +1,4 @@
-@import url(../../../node_modules/bulma/css/bulma.css);
-
-.myFavoriteBooks{
-    float: right;
-    margin-right: 4em
+.myFavoriteBooks {
+  float: right;
+  margin-right: 4em;
 }
