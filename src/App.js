@@ -15,6 +15,8 @@ class App extends Component {
     dataPresent: null,
     loggedIn: true,
     wrongSubmit: "",
+    addSuccess: null,
+    deleteSuccess: null,
   };
 
   handleOnChange = (event) => {
@@ -24,7 +26,7 @@ class App extends Component {
     });
   };
 
-  fetchData = async (event) => {
+  onSearchSubmit = async (event) => {
     event.preventDefault();
 
     const data = await bookGetter(this.state.bookInfo);
@@ -33,6 +35,7 @@ class App extends Component {
       jsonData = json.GoodreadsResponse.search[0].results[0].work;
     });
 
+    console.log(jsonData);
     if (jsonData !== undefined) {
       let booksData = jsonData.map((book, index) => ({
         cover: book.best_book[0].image_url[0],
@@ -57,9 +60,13 @@ class App extends Component {
   };
 
   HandleAddOnClick = async (newBook) => {
-    this.setState((prevState) => ({
-      favoriteBooks: [...prevState.favoriteBooks, newBook],
-    }));
+    // if (this.state.favoriteBooks) {
+    //   this.state.favoriteBooks.forEach(b => {
+    //     if (b.id === newBook.id) {
+    //       this.setState({ addSuccess: false });
+    //     }
+    //   })
+    // }
   };
 
   HandleDeleteOnClick = async (id) => {
@@ -75,6 +82,7 @@ class App extends Component {
       wrongSubmit,
       bookInfo,
       favoriteBooks,
+      addSuccess,
     } = this.state;
 
     return (
@@ -93,10 +101,11 @@ class App extends Component {
                   dataPresent={dataPresent}
                   books={books}
                   inputValue={inputValue}
-                  fetchData={this.fetchData}
+                  fetchData={this.onSearchSubmit}
                   wrongSubmit={wrongSubmit}
                   handleOnClick={this.HandleAddOnClick}
                   handleOnChange={this.handleOnChange}
+                  addSuccess={addSuccess}
                 />
               )}
             />

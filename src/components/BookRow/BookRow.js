@@ -10,15 +10,16 @@ class BookRow extends Component {
       bookYear,
       bookRating,
       handleOnClick,
+      id,
     } = this.props;
 
     const newFavoriateBook = {
+      id: `${id}`,
       cover: `${bookCover}`,
       title: `${bookTitle}`,
       author: `${bookAuthor}`,
       year: `${bookYear}`,
       rating: `${bookRating}`,
-      isFavoriateBook: true,
     };
 
     return (
