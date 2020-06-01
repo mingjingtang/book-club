@@ -1,38 +1,48 @@
-import React, { Component } from 'react';
-import '../BookRow/BookRow.css'
+import React, { Component } from "react";
+import "../BookRow/BookRow.css";
 
-class BookRow extends Component{
-    render(){
-        const newFavoriateBook = {
-            cover: `${this.props.bookCover}`,
-            title: `${this.props.bookTitle}`,
-            author:`${this.props.bookAuthor}`,
-            year: `${this.props.bookYear}`,
-            rating: `${this.props.bookRating}`,
-            isFavoriateBook: true
-        }
+class BookRow extends Component {
+  render() {
+    const {
+      bookCover,
+      bookTitle,
+      bookAuthor,
+      bookYear,
+      bookRating,
+      handleOnClick,
+    } = this.props;
 
-        return(
-            <div className = "bookRow"> 
-                <div>
-                    <div> 
-                        <img src = {this.props.bookCover} alt=""/>
-                    </div>
-                    <div>
-                        <p>Title: {this.props.bookTitle}</p>
-                        <p>Author: {this.props.bookAuthor}</p>
-                        <p>Year: {this.props.bookYear}</p>
-                        <p>Rating: {this.props.bookRating}</p>
-                    </div>
-                </div>
+    const newFavoriateBook = {
+      cover: `${bookCover}`,
+      title: `${bookTitle}`,
+      author: `${bookAuthor}`,
+      year: `${bookYear}`,
+      rating: `${bookRating}`,
+      isFavoriateBook: true,
+    };
 
-                
-                <button className = "button is-danger is-rounded"
-                        onClick={ (e) => (this.props.handleOnClick(newFavoriateBook))}>
-                        Add to my favoriate list
-                </button>
-            </div>
-        )
-    }
+    return (
+      <div className="bookRow">
+        <div>
+          <div>
+            <img src={bookCover} alt="" />
+          </div>
+          <div>
+            <p>Title: {bookTitle}</p>
+            <p>Author: {bookAuthor}</p>
+            <p>Year: {bookYear}</p>
+            <p>Rating: {bookRating}</p>
+          </div>
+        </div>
+
+        <button
+          style={{ marginTop: "2vh" }}
+          onClick={(e) => handleOnClick(newFavoriateBook)}
+        >
+          Add to my favoriate list
+        </button>
+      </div>
+    );
+  }
 }
-export default BookRow
+export default BookRow;

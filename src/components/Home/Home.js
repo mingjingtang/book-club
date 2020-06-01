@@ -1,5 +1,5 @@
 import React from "react";
-import BookList from "../BookList/BookList";
+import BookRow from "../BookRow/BookRow";
 import { Form, Button, Container, Input } from "semantic-ui-react";
 
 export default class MenuNav extends React.Component {
@@ -16,7 +16,19 @@ export default class MenuNav extends React.Component {
 
     const bookData =
       dataPresent !== false ? (
-        <BookList books={books} handleOnClick={handleOnClick} />
+        books.map((book, index) => {
+          return (
+            <BookRow
+              key={index}
+              handleOnClick={handleOnClick}
+              bookCover={book.cover}
+              bookTitle={book.title}
+              bookAuthor={book.author}
+              bookYear={book.year}
+              bookRating={book.rating}
+            />
+          );
+        })
       ) : (
         <div className="ui error message">
           <div className="content">

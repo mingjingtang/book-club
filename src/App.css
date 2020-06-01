@@ -35,3 +35,11 @@
     transform: rotate(360deg);
   }
 }
+
+.bookRow {
+  margin-top: 2vh;
+}
+
+.button {
+  margin-top: 2vh;
+}

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Route, Redirect } from "react-router-dom";
-import FavoriteBooks from "./components/FavoriteBooks/FavoriteBooks";
+import FavoriteBookList from "./components/FavoriteBookList/FavoriteBookList";
 import MenuNav from "./components/MenuNav/MenuNav";
 import Home from "./components/Home/Home";
 import Login from "./components/Login/Login";
@@ -28,8 +28,6 @@ class App extends Component {
     event.preventDefault();
 
     const data = await bookGetter(this.state.bookInfo);
-
-    //convert data to json.
     let jsonData = [];
     await convert.xmlDataToJSON(data.data).then((json) => {
       jsonData = json.GoodreadsResponse.search[0].results[0].work;
@@ -58,24 +56,14 @@ class App extends Component {
     }
   };
 
-  handleOnClick = async (newBook) => {
+  HandleAddOnClick = async (newBook) => {
     this.setState((prevState) => ({
       favoriteBooks: [...prevState.favoriteBooks, newBook],
     }));
   };
 
-  handleOnClick2 = async (id) => {
-    console.log("this is the id i am going to delete " + id);
-    const { favoriteBooks } = this.state;
-    console.log("favoriate book before splice" + this.state.favoriteBooks);
-    favoriteBooks.splice(id, 1);
-    console.log("favoriate book after splice " + this.state.favoriteBooks);
-
-    this.setState((prevState) => ({
-      favoriteBooks: this.state.favoriteBooks.filter((b) => {
-        return b.isFavoriateBook === true;
-      }),
-    }));
+  HandleDeleteOnClick = async (id) => {
+    this.state.favoriteBooks.splice(id, 1);
   };
 
   render() {
@@ -86,6 +74,7 @@ class App extends Component {
       dataPresent,
       wrongSubmit,
       bookInfo,
+      favoriteBooks,
     } = this.state;
 
     return (
@@ -106,7 +95,7 @@ class App extends Component {
                   inputValue={inputValue}
                   fetchData={this.fetchData}
                   wrongSubmit={wrongSubmit}
-                  handleOnClick={this.handleOnClick}
+                  handleOnClick={this.HandleAddOnClick}
                   handleOnChange={this.handleOnChange}
                 />
               )}
@@ -114,9 +103,9 @@ class App extends Component {
             <Route
               path="/myFavorite"
               render={() => (
-                <FavoriteBooks
-                  favoriteBooks={this.state.favoriteBooks}
-                  handleOnClick2={this.handleOnClick2}
+                <FavoriteBookList
+                  favoriteBooks={favoriteBooks}
+                  handleOnClick2={this.HandleDeleteOnClick}
                 />
               )}
             />
