@@ -8,7 +8,6 @@ import {
   Grid,
   Message,
 } from "semantic-ui-react";
-import FavoriteBookList from "../FavoriteBookList/FavoriteBookList";
 
 export default class MenuNav extends React.Component {
   render() {
@@ -28,8 +27,8 @@ export default class MenuNav extends React.Component {
         books.map((book, index) => {
           return (
             <BookRow
-              id={index}
               key={index}
+              bookId={book.bookId}
               handleOnClick={handleOnClick}
               bookCover={book.cover}
               bookTitle={book.title}
@@ -40,7 +39,7 @@ export default class MenuNav extends React.Component {
           );
         })
       ) : (
-        <div className="ui error message">
+        <div className="ui error message" style={{ marginTop: "2vh" }}>
           <div className="content">
             <div className="header">Sorry, couldn't find "{wrongSubmit}"!</div>
             <p>Please try to find other books or authors.</p>

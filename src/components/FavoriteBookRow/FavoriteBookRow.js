@@ -9,7 +9,7 @@ class FavoriteBookRow extends Component {
       bookAuthor,
       bookYear,
       bookRating,
-      id,
+      bookId,
     } = this.props;
 
     return (
@@ -24,7 +24,7 @@ class FavoriteBookRow extends Component {
 
         <button
           style={{ marginTop: "2vh" }}
-          onClick={(e) => this.props.handleOnClick2(id)}
+          onClick={(e) => this.props.handleOnClick2(bookId)}
         >
           Delete
         </button>

@@ -10,7 +10,7 @@ class FavoriteBookList extends Component {
         <FavoriteBookRow
           handleOnClick2={this.props.handleOnClick2}
           key={index}
-          id={index}
+          bookId={book.bookId}
           bookCover={book.cover}
           bookTitle={book.title}
           bookAuthor={book.author}

@@ -10,6 +10,7 @@ let convert = require("xml-to-json-promise");
 
 class App extends Component {
   state = {
+    bookInfo: "",
     books: [],
     favoriteBooks: [],
     dataPresent: null,
@@ -30,14 +31,15 @@ class App extends Component {
     event.preventDefault();
 
     const data = await bookGetter(this.state.bookInfo);
+
     let jsonData = [];
     await convert.xmlDataToJSON(data.data).then((json) => {
       jsonData = json.GoodreadsResponse.search[0].results[0].work;
     });
 
-    console.log(jsonData);
     if (jsonData !== undefined) {
       let booksData = jsonData.map((book, index) => ({
+        bookId: book.best_book[0].id[0]._,
         cover: book.best_book[0].image_url[0],
         title: book.best_book[0].title[0],
         author: book.best_book[0].author[0].name[0],
@@ -60,13 +62,24 @@ class App extends Component {
   };
 
   HandleAddOnClick = async (newBook) => {
-    // if (this.state.favoriteBooks) {
-    //   this.state.favoriteBooks.forEach(b => {
-    //     if (b.id === newBook.id) {
-    //       this.setState({ addSuccess: false });
-    //     }
-    //   })
-    // }
+    const { favoriteBooks, addSuccess } = this.state;
+
+    console.log("newbook id " + newBook.bookId);
+
+    let i = 0;
+    while (i < favoriteBooks.length) {
+      if (newBook.bookId === favoriteBooks[i].bookId) {
+        this.setState({ addSuccess: false });
+      }
+      i++;
+    }
+
+    if (i === favoriteBooks.length && addSuccess === null) {
+      this.setState((prevState) => ({
+        favoriteBooks: [...prevState.favoriteBooks, newBook],
+      }));
+      this.setState({ addSuccess: true });
+    }
   };
 
   HandleDeleteOnClick = async (id) => {
