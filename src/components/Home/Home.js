@@ -47,29 +47,6 @@ export default class MenuNav extends React.Component {
         </div>
       );
 
-    const info = () => {
-      if (addSuccess === true) {
-        return (
-          <Message
-            success
-            header="Add Sucessful!"
-            content="You can check your favorite book from My Favoriate."
-          />
-        );
-      }
-      if (addSuccess === false) {
-        return (
-          <Message
-            error
-            header="Sorry, you can not add to your favoriate list!"
-            content="You may already added it to your favoriate list."
-          />
-        );
-      } else {
-        return <div></div>;
-      }
-    };
-
     return (
       <Container>
         <Form onSubmit={fetchData}>
@@ -88,7 +65,17 @@ export default class MenuNav extends React.Component {
         <Container>
           <Grid columns={2}>
             <Grid.Column>{bookData}</Grid.Column>
-            <Grid.Column style={{ marginTop: "3vh" }}>{info}</Grid.Column>
+            <Grid.Column style={{ marginTop: "3vh" }}>
+              {addSuccess === false ? (
+                <div></div>
+              ) : (
+                <Message
+                  success
+                  header="Add Sucessful!"
+                  content="You can check your favorite book from My Favoriate."
+                />
+              )}
+            </Grid.Column>
           </Grid>
         </Container>
       </Container>

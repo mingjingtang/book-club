@@ -16,7 +16,7 @@ class App extends Component {
     dataPresent: null,
     loggedIn: true,
     wrongSubmit: "",
-    addSuccess: null,
+    addSuccess: false,
     deleteSuccess: null,
   };
 
@@ -62,24 +62,10 @@ class App extends Component {
   };
 
   HandleAddOnClick = async (newBook) => {
-    const { favoriteBooks, addSuccess } = this.state;
-
-    console.log("newbook id " + newBook.bookId);
-
-    let i = 0;
-    while (i < favoriteBooks.length) {
-      if (newBook.bookId === favoriteBooks[i].bookId) {
-        this.setState({ addSuccess: false });
-      }
-      i++;
-    }
-
-    if (i === favoriteBooks.length && addSuccess === null) {
-      this.setState((prevState) => ({
-        favoriteBooks: [...prevState.favoriteBooks, newBook],
-      }));
-      this.setState({ addSuccess: true });
-    }
+    this.setState((prevState) => ({
+      favoriteBooks: [...prevState.favoriteBooks, newBook],
+      addSuccess: true,
+    }));
   };
 
   HandleDeleteOnClick = async (id) => {
