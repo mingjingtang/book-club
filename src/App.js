@@ -1,146 +1,126 @@
-import React, { Component } from 'react';
-import {Route, Link, Redirect} from 'react-router-dom';
-import BookResult from './components/BookResult/BookResult'
-import FavoriteBooks from './components/FavoriteBooks/FavoriteBooks'
-import './App.css';
-import axios from 'axios'
-let convert = require('xml-to-json-promise');
-let parseString = require('xml2js').parseString;
+import React, { Component } from "react";
+import { Route, Redirect } from "react-router-dom";
+import FavoriteBookList from "./components/FavoriteBookList/FavoriteBookList";
+import MenuNav from "./components/MenuNav/MenuNav";
+import Home from "./components/Home/Home";
+import Login from "./components/Login/Login";
+import { bookGetter } from "./services/api";
+import "./App.css";
+let convert = require("xml-to-json-promise");
 
 class App extends Component {
-  constructor(){
-    super();
+  state = {
+    books: [],
+    favoriteBooks: [],
+    dataPresent: null,
+    loggedIn: true,
+    wrongSubmit: "",
+    addSuccess: null,
+    deleteSuccess: null,
+  };
 
-    this.state={
-      inputValue: '',
-      books: [],
-      favoriteBooks: [],
-      target: null,
-    }
-  }
-
-  fetchData = async (evt) => {
-    try {
-      evt.preventDefault();
-      const fetchCall =  await axios({
-        url:`https://cors-anywhere.herokuapp.com/https://www.goodreads.com/search/index.xml?key=${process.env.REACT_APP_BOOK_KEY}&q=${this.state.inputValue}`,
-        method: 'get'
-      })
-      
-      let xml = fetchCall.data;
-      let jsonData = [];
-      await convert.xmlDataToJSON(fetchCall.data).then(json => {
-        jsonData = json.GoodreadsResponse.search[0].results[0].work
-      })
-      
-      let booksData = jsonData.map((book, index) => (
-        {
-          cover: book.best_book[0].image_url[0],
-          title: book.best_book[0].title[0],
-          author: book.best_book[0].author[0].name[0],
-          year: book.original_publication_year[0]._,
-          rating: book.average_rating[0]
-        }  
-      ))
-      console.log("booksData info:",booksData)
-      parseString(xml, (err,result) => console.log(JSON.stringify(result)))
-
-      this.setState(prevState => ({
-          books: booksData,
-      }))
-    } catch (err) {
-      console.log('error', err.message);
-    }
-  }
- 
-  handleOnChange = (evt) => {
+  handleOnChange = (event) => {
+    const { name, value } = event.target;
     this.setState({
-      inputValue: evt.target.value
-    })
-  }
+      [name]: value,
+    });
+  };
 
-  handleOnClick = async(newBook) => {
-    console.log('this component is clicked')
+  onSearchSubmit = async (event) => {
+    event.preventDefault();
 
-    await this.setState(prevState => ({
-      favoriteBooks: [...prevState.favoriteBooks,newBook],
-    }))
+    const data = await bookGetter(this.state.bookInfo);
+    let jsonData = [];
+    await convert.xmlDataToJSON(data.data).then((json) => {
+      jsonData = json.GoodreadsResponse.search[0].results[0].work;
+    });
 
-    console.log(this.state.favoriteBooks)
-  }
+    console.log(jsonData);
+    if (jsonData !== undefined) {
+      let booksData = jsonData.map((book, index) => ({
+        cover: book.best_book[0].image_url[0],
+        title: book.best_book[0].title[0],
+        author: book.best_book[0].author[0].name[0],
+        year: book.original_publication_year[0]._,
+        rating: book.average_rating[0],
+      }));
 
+      this.setState({
+        books: booksData,
+        dataPresent: true,
+        bookInfo: "",
+      });
+    } else {
+      this.setState({
+        dataPresent: false,
+        wrongSubmit: this.state.bookInfo,
+        bookInfo: "",
+      });
+    }
+  };
 
-  handleOnClick2 = async (id) => {
-    console.log('this is the id i am going to delete ' + id)
-    const {favoriteBooks} = this.state
-    console.log('favoriate book before splice' + this.state.favoriteBooks)
-    favoriteBooks.splice(id, 1);
-    console.log('favoriate book after splice ' + this.state.favoriteBooks)
-    
-    await this.setState(prevState => ({
-        favoriteBooks: this.state.favoriteBooks.filter(b=>{
-            return b.isFavoriateBook === true
-        })
-    }))
-  }
+  HandleAddOnClick = async (newBook) => {
+    // if (this.state.favoriteBooks) {
+    //   this.state.favoriteBooks.forEach(b => {
+    //     if (b.id === newBook.id) {
+    //       this.setState({ addSuccess: false });
+    //     }
+    //   })
+    // }
+  };
 
+  HandleDeleteOnClick = async (id) => {
+    this.state.favoriteBooks.splice(id, 1);
+  };
 
-  render = () => {
-    console.log('my favoriteBooks in render'+ this.state.favoriteBooks)
-
-    const isBookHere = (this.state.books.length>0)?
-    <Route 
-      exact path="/"
-      render={()=> 
-        <Redirect
-          to={{
-          pathname: "./BookResult",
-        }}/> }
-    />
-    :null
+  render() {
+    const {
+      books,
+      inputValue,
+      loggedIn,
+      dataPresent,
+      wrongSubmit,
+      bookInfo,
+      favoriteBooks,
+      addSuccess,
+    } = this.state;
 
     return (
-      <div className="App">
-          <div>
-              <h1 className='title is-1 is-spaced'>Book Club</h1>
-
-              <form className="field is-grouped" onSubmit={this.fetchData}>
-                  <p className="control is-expanded">
-                      <input className="input" type="text" placeholder="title of the book" value={this.state.inputValue}
-                      onChange={this.handleOnChange}/>
-                  </p>
-                  
-                  <input className="button is-primary" type="submit" value="Search"></input>
-              </form>
-
-
-              <div className = "columns">
-                <p className = "column"><Link to="/BookResult"  style={{fontSize:'30px', color:'gray' }}>Book search result</Link></p>
-                <p className = "column"><Link to="FavoriteBooks"  style={{ fontSize:'30px', color:'gray'}}>My favorite books</Link></p>
-              </div>
-          </div>
-      
-          <main>
-              {isBookHere}
-              <Route
-                exact path = "/BookResult"
-                render={()=><BookResult
-                    books = {this.state.books}
-                    handleOnClick = {this.handleOnClick}
-                    favoriteBooks = {this.state.favoriteBooks}
-                    handleOnClick2 = {this.handleOnClick2}
-                />}
-              />
-
-              <Route
-                path = "/FavoriteBooks"
-                render={()=><FavoriteBooks
-                  favoriteBooks = {this.state.favoriteBooks}
-                  handleOnClick2 = {this.handleOnClick2}
-                />}
-              />
-          </main>  
-      </div>
+      <main>
+        {!loggedIn ? (
+          <Route exact path="/" render={() => <Login />} />
+        ) : (
+          <>
+            <MenuNav />
+            <Redirect to="/Home" />
+            <Route
+              path="/Home"
+              render={() => (
+                <Home
+                  bookInfo={bookInfo}
+                  dataPresent={dataPresent}
+                  books={books}
+                  inputValue={inputValue}
+                  fetchData={this.onSearchSubmit}
+                  wrongSubmit={wrongSubmit}
+                  handleOnClick={this.HandleAddOnClick}
+                  handleOnChange={this.handleOnChange}
+                  addSuccess={addSuccess}
+                />
+              )}
+            />
+            <Route
+              path="/myFavorite"
+              render={() => (
+                <FavoriteBookList
+                  favoriteBooks={favoriteBooks}
+                  handleOnClick2={this.HandleDeleteOnClick}
+                />
+              )}
+            />
+          </>
+        )}
+      </main>
     );
   }
 }
