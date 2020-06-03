@@ -17,7 +17,7 @@ class App extends Component {
     loggedIn: true,
     wrongSubmit: "",
     addSuccess: false,
-    deleteSuccess: null,
+    deleteSuccess: false,
   };
 
   handleOnChange = (event) => {
@@ -66,10 +66,26 @@ class App extends Component {
       favoriteBooks: [...prevState.favoriteBooks, newBook],
       addSuccess: true,
     }));
+
+    this.timeout = setTimeout(() => {
+      this.setState({ addSuccess: false });
+    }, 2000);
   };
 
   HandleDeleteOnClick = async (id) => {
-    this.state.favoriteBooks.splice(id, 1);
+    console.log(id);
+
+    this.setState({
+      favoriteBooks: this.state.favoriteBooks.filter(
+        (item) => item.bookId != id
+      ),
+    });
+
+    this.setState({ deleteSuccess: true });
+
+    this.timeout = setTimeout(() => {
+      this.setState({ deleteSuccess: false });
+    }, 2000);
   };
 
   render() {
@@ -82,6 +98,7 @@ class App extends Component {
       bookInfo,
       favoriteBooks,
       addSuccess,
+      deleteSuccess,
     } = this.state;
 
     return (
@@ -114,6 +131,7 @@ class App extends Component {
                 <FavoriteBookList
                   favoriteBooks={favoriteBooks}
                   handleOnClick2={this.HandleDeleteOnClick}
+                  deleteSuccess={deleteSuccess}
                 />
               )}
             />
