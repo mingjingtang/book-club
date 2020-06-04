@@ -10,14 +10,19 @@ let convert = require("xml-to-json-promise");
 
 class App extends Component {
   state = {
+    bookInfo: "",
     books: [],
     favoriteBooks: [],
     dataPresent: null,
     loggedIn: true,
     wrongSubmit: "",
-    addSuccess: null,
-    deleteSuccess: null,
+    addSuccess: false,
+    deleteSuccess: false,
   };
+
+  componentDidCatch(error, info) {
+    this.setState({ dataPresent: false });
+  }
 
   handleOnChange = (event) => {
     const { name, value } = event.target;
@@ -30,47 +35,54 @@ class App extends Component {
     event.preventDefault();
 
     const data = await bookGetter(this.state.bookInfo);
-    let jsonData = [];
-    await convert.xmlDataToJSON(data.data).then((json) => {
-      jsonData = json.GoodreadsResponse.search[0].results[0].work;
-    });
 
-    console.log(jsonData);
-    if (jsonData !== undefined) {
-      let booksData = jsonData.map((book, index) => ({
-        cover: book.best_book[0].image_url[0],
-        title: book.best_book[0].title[0],
-        author: book.best_book[0].author[0].name[0],
-        year: book.original_publication_year[0]._,
-        rating: book.average_rating[0],
-      }));
+    if (data.data !== "FAILED") {
+      let jsonData = [];
+      await convert.xmlDataToJSON(data.data).then((json) => {
+        jsonData = json.GoodreadsResponse.search[0].results[0].work;
+      });
 
-      this.setState({
-        books: booksData,
-        dataPresent: true,
-        bookInfo: "",
-      });
-    } else {
-      this.setState({
-        dataPresent: false,
-        wrongSubmit: this.state.bookInfo,
-        bookInfo: "",
-      });
+      console.log(jsonData);
+
+      if (jsonData !== undefined) {
+        this.setState({
+          books: jsonData,
+          dataPresent: true,
+          bookInfo: "",
+        });
+      } else {
+        this.setState({
+          dataPresent: false,
+          wrongSubmit: this.state.bookInfo,
+          bookInfo: "",
+        });
+      }
     }
   };
 
   HandleAddOnClick = async (newBook) => {
-    // if (this.state.favoriteBooks) {
-    //   this.state.favoriteBooks.forEach(b => {
-    //     if (b.id === newBook.id) {
-    //       this.setState({ addSuccess: false });
-    //     }
-    //   })
-    // }
+    this.setState((prevState) => ({
+      favoriteBooks: [...prevState.favoriteBooks, newBook],
+      addSuccess: true,
+    }));
+
+    this.timeout = setTimeout(() => {
+      this.setState({ addSuccess: false });
+    }, 2000);
   };
 
   HandleDeleteOnClick = async (id) => {
-    this.state.favoriteBooks.splice(id, 1);
+    this.setState({
+      favoriteBooks: this.state.favoriteBooks.filter(
+        (item) => item.bookId !== id
+      ),
+    });
+
+    this.setState({ deleteSuccess: true });
+
+    this.timeout = setTimeout(() => {
+      this.setState({ deleteSuccess: false });
+    }, 2000);
   };
 
   render() {
@@ -83,6 +95,7 @@ class App extends Component {
       bookInfo,
       favoriteBooks,
       addSuccess,
+      deleteSuccess,
     } = this.state;
 
     return (
@@ -115,6 +128,7 @@ class App extends Component {
                 <FavoriteBookList
                   favoriteBooks={favoriteBooks}
                   handleOnClick2={this.HandleDeleteOnClick}
+                  deleteSuccess={deleteSuccess}
                 />
               )}
             />

@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import "../BookRow/BookRow.css";
+import { Button } from "semantic-ui-react";
 
 class BookRow extends Component {
   render() {
@@ -10,11 +11,11 @@ class BookRow extends Component {
       bookYear,
       bookRating,
       handleOnClick,
-      id,
+      bookId,
     } = this.props;
 
     const newFavoriateBook = {
-      id: `${id}`,
+      bookId: `${bookId}`,
       cover: `${bookCover}`,
       title: `${bookTitle}`,
       author: `${bookAuthor}`,
@@ -36,12 +37,13 @@ class BookRow extends Component {
           </div>
         </div>
 
-        <button
+        <Button
+          color="brown"
           style={{ marginTop: "2vh" }}
           onClick={(e) => handleOnClick(newFavoriateBook)}
         >
           Add to my favoriate list
-        </button>
+        </Button>
       </div>
     );
   }

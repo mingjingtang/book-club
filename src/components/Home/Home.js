@@ -8,7 +8,6 @@ import {
   Grid,
   Message,
 } from "semantic-ui-react";
-import FavoriteBookList from "../FavoriteBookList/FavoriteBookList";
 
 export default class MenuNav extends React.Component {
   render() {
@@ -26,50 +25,29 @@ export default class MenuNav extends React.Component {
     const bookData =
       dataPresent !== false ? (
         books.map((book, index) => {
-          return (
-            <BookRow
-              id={index}
-              key={index}
-              handleOnClick={handleOnClick}
-              bookCover={book.cover}
-              bookTitle={book.title}
-              bookAuthor={book.author}
-              bookYear={book.year}
-              bookRating={book.rating}
-            />
-          );
+          if (typeof book.average_rating[0] === "string") {
+            return (
+              <BookRow
+                key={index}
+                bookId={{ ...book }.best_book[0].id[0]._}
+                handleOnClick={handleOnClick}
+                bookCover={{ ...book }.best_book[0].image_url[0]}
+                bookTitle={{ ...book }.best_book[0].title[0]}
+                bookAuthor={{ ...book }.best_book[0].author[0].name[0]}
+                bookYear={{ ...book }.original_publication_year[0]._}
+                bookRating={{ ...book }.average_rating[0]}
+              />
+            );
+          }
         })
       ) : (
-        <div className="ui error message">
+        <div className="ui error message" style={{ marginTop: "2vh" }}>
           <div className="content">
             <div className="header">Sorry, couldn't find "{wrongSubmit}"!</div>
             <p>Please try to find other books or authors.</p>
           </div>
         </div>
       );
-
-    const info = () => {
-      if (addSuccess === true) {
-        return (
-          <Message
-            success
-            header="Add Sucessful!"
-            content="You can check your favorite book from My Favoriate."
-          />
-        );
-      }
-      if (addSuccess === false) {
-        return (
-          <Message
-            error
-            header="Sorry, you can not add to your favoriate list!"
-            content="You may already added it to your favoriate list."
-          />
-        );
-      } else {
-        return <div></div>;
-      }
-    };
 
     return (
       <Container>
@@ -82,14 +60,24 @@ export default class MenuNav extends React.Component {
               value={bookInfo || ""}
               onChange={handleOnChange}
             />
-            <Button primary>Search</Button>
+            <Button color="olive">Search</Button>
           </Form.Field>
         </Form>
 
         <Container>
           <Grid columns={2}>
             <Grid.Column>{bookData}</Grid.Column>
-            <Grid.Column style={{ marginTop: "3vh" }}>{info}</Grid.Column>
+            <Grid.Column style={{ marginTop: "3vh" }}>
+              {addSuccess === false ? (
+                <div></div>
+              ) : (
+                <Message
+                  success
+                  header="Add Sucessful!"
+                  content="You can check your favorite book from My Favoriate."
+                />
+              )}
+            </Grid.Column>
           </Grid>
         </Container>
       </Container>
