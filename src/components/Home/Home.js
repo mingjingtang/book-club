@@ -25,18 +25,20 @@ export default class MenuNav extends React.Component {
     const bookData =
       dataPresent !== false ? (
         books.map((book, index) => {
-          return (
-            <BookRow
-              key={index}
-              bookId={book.bookId}
-              handleOnClick={handleOnClick}
-              bookCover={book.cover}
-              bookTitle={book.title}
-              bookAuthor={book.author}
-              bookYear={book.year}
-              bookRating={book.rating}
-            />
-          );
+          if (typeof book.average_rating[0] === "string") {
+            return (
+              <BookRow
+                key={index}
+                bookId={{ ...book }.best_book[0].id[0]._}
+                handleOnClick={handleOnClick}
+                bookCover={{ ...book }.best_book[0].image_url[0]}
+                bookTitle={{ ...book }.best_book[0].title[0]}
+                bookAuthor={{ ...book }.best_book[0].author[0].name[0]}
+                bookYear={{ ...book }.original_publication_year[0]._}
+                bookRating={{ ...book }.average_rating[0]}
+              />
+            );
+          }
         })
       ) : (
         <div className="ui error message" style={{ marginTop: "2vh" }}>

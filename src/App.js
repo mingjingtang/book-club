@@ -20,6 +20,10 @@ class App extends Component {
     deleteSuccess: false,
   };
 
+  componentDidCatch(error, info) {
+    this.setState({ dataPresent: false });
+  }
+
   handleOnChange = (event) => {
     const { name, value } = event.target;
     this.setState({
@@ -32,32 +36,27 @@ class App extends Component {
 
     const data = await bookGetter(this.state.bookInfo);
 
-    let jsonData = [];
-    await convert.xmlDataToJSON(data.data).then((json) => {
-      jsonData = json.GoodreadsResponse.search[0].results[0].work;
-    });
-
-    if (jsonData !== undefined) {
-      let booksData = jsonData.map((book, index) => ({
-        bookId: book.best_book[0].id[0]._,
-        cover: book.best_book[0].image_url[0],
-        title: book.best_book[0].title[0],
-        author: book.best_book[0].author[0].name[0],
-        year: book.original_publication_year[0]._,
-        rating: book.average_rating[0],
-      }));
-
-      this.setState({
-        books: booksData,
-        dataPresent: true,
-        bookInfo: "",
+    if (data.data !== "FAILED") {
+      let jsonData = [];
+      await convert.xmlDataToJSON(data.data).then((json) => {
+        jsonData = json.GoodreadsResponse.search[0].results[0].work;
       });
-    } else {
-      this.setState({
-        dataPresent: false,
-        wrongSubmit: this.state.bookInfo,
-        bookInfo: "",
-      });
+
+      console.log(jsonData);
+
+      if (jsonData !== undefined) {
+        this.setState({
+          books: jsonData,
+          dataPresent: true,
+          bookInfo: "",
+        });
+      } else {
+        this.setState({
+          dataPresent: false,
+          wrongSubmit: this.state.bookInfo,
+          bookInfo: "",
+        });
+      }
     }
   };
 
