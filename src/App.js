@@ -73,11 +73,9 @@ class App extends Component {
   };
 
   HandleDeleteOnClick = async (id) => {
-    console.log(id);
-
     this.setState({
       favoriteBooks: this.state.favoriteBooks.filter(
-        (item) => item.bookId != id
+        (item) => item.bookId !== id
       ),
     });
 

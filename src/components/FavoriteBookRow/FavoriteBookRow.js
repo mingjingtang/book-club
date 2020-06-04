@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import "../FavoriteBookRow/FavoriteBookRow.css";
+import { Button } from "semantic-ui-react";
 
 class FavoriteBookRow extends Component {
   render() {
@@ -22,12 +23,13 @@ class FavoriteBookRow extends Component {
           <p>Rating: {bookRating}</p>
         </div>
 
-        <button
+        <Button
+          color="pink"
           style={{ marginTop: "2vh" }}
           onClick={(e) => this.props.handleOnClick2(bookId)}
         >
           Delete
-        </button>
+        </Button>
       </div>
     );
   }

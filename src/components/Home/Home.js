@@ -58,7 +58,7 @@ export default class MenuNav extends React.Component {
               value={bookInfo || ""}
               onChange={handleOnChange}
             />
-            <Button primary>Search</Button>
+            <Button color="olive">Search</Button>
           </Form.Field>
         </Form>
 
